@@ -136,6 +136,15 @@ public class Main {
         System.out.println("-+".repeat(50));
     }
     private static void hallBooking() {
+        input.nextLine();
+        System.out.println("Start Booking Process ");
+        timeShow();
+        String confirm=validateInput("Please select show time ( A | B | C ) :  ","^(?i)[abc]$");
+        switch (confirm){
+            case "a","A" -> hallEachShift(morningShift,"Morning");
+            case "b","B" -> hallEachShift(afternoonShift,"Afternoon");
+            case "c","C" -> hallEachShift(nightShift,"Night");
+        }
     }
     private static void renameArray(String[][] seat){
         for(int i=0;i<seat.length;i++){
@@ -149,12 +158,19 @@ public class Main {
         }
     }
     private static void hallEachShift(String[][] seat,String shift){
+        renameArray(seat);
         System.out.println("Hall "+shift+" shift");
         for(String[] row: seat){
             for(String col: row){
-                System.out.print(col+" \t");
+                System.out.print("| "+col+" | \t");
             }
             System.out.println();
         }
+    }
+
+    private static String availableChecking(String[][] seat ,int rows,int columns){
+        if(seat[rows][columns].equals("null")||seat[rows][columns].contains("Av") ){
+            return "Available";
+        }else return "Unavailable";
     }
 }
